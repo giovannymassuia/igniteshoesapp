@@ -5,13 +5,15 @@ import {
   Roboto_400Regular,
   Roboto_700Bold,
 } from "@expo-google-fonts/roboto";
-import OneSignal from "react-native-onesignal";
+import OneSignal, { OSNotification } from "react-native-onesignal";
 import { Routes } from "./src/routes";
 
 import { THEME } from "./src/theme";
 import { Loading } from "./src/components/Loading";
 
 import { CartContextProvider } from "./src/contexts/CartContext";
+import { useEffect, useState } from "react";
+import { Notification } from "./src/components/Notification";
 
 // get from env file
 const ONESIGNAL_APP_ID_ENV = process.env.ONE_SIGNAL_APP_ID!;
@@ -20,6 +22,15 @@ OneSignal.setAppId(ONESIGNAL_APP_ID_ENV);
 
 export default function App() {
   const [fontsLoaded] = useFonts({ Roboto_400Regular, Roboto_700Bold });
+
+  useEffect(() => {
+    const unsubscribe = OneSignal.setNotificationOpenedHandler((event) => {
+      console.log("notification opened a", event.action);
+      console.log("notification opened n", event.notification);
+    });
+
+    return () => unsubscribe;
+  }, []);
 
   return (
     <NativeBaseProvider theme={THEME}>
