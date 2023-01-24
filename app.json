@@ -35,7 +35,9 @@
       [
         "onesignal-expo-plugin",
         {
-          "mode": "development"
+          "mode": "development",
+          "smallIcon": "./assets/icon.png",
+          "largeIcon": "./assets/icon.png"
         }
       ]
     ]
